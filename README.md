@@ -5,7 +5,7 @@
   <img src="https://raw.githubusercontent.com/aimclub/open-source-ops/43bb283758b43d75ec1df0a6bb4ae3eb20066323/badges/ITMO_badge_rus.svg">
   <img src="https://camo.githubusercontent.com/5d2a77363705f731c82a241eed1d9238bea2f5922ebf54e4db25e1a36fc84f5b/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c616e672d72752d7265642e737667">
 </p>
-# 🛡️ Observer Bot (@observerprojectbot)
+🛡️ Observer Bot (@observerprojectbot)
 
 **Observer Bot** — это ваш персональный аудит безопасности в телеграм. Бот анализирует транзакции в сети Solana и выявляет скрытые угрозы, такие как попытки кражи прав доступа или неограниченные разрешения на трату ваших токенов.
 
