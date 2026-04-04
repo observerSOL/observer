@@ -121,3 +121,9 @@
     Python 3.10+
     aiogram
     solana-prc
+---
+
+## Contacts
+
+Yuriychak Semyon  
+yuriychak_semyon@mail.ru
