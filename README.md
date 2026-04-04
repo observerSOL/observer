@@ -123,7 +123,11 @@
     solana-prc
 ---
 
-## Contacts
+---
 
-Yuriychak Semyon  
-yuriychak_semyon@mail.ru
+## 📬 Contacts
+
+Если у вас возникли вопросы или предложения, вы можете связаться с автором проекта:
+
+**Yuriychak Semyon**  
+✉️ Email: [yuriychak_semyon@mail.ru](mailto:yuriychak_semyon@mail.ru)
