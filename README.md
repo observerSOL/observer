@@ -9,7 +9,7 @@
   <img src="https://i.pinimg.com/736x/d7/2c/59/d72c59c8b66c325973d85a6e1527f294.jpg" width="180">
 </p>
 
-<h1 align="center">🛡️ Observer Bot</h1>
+<h1 align="center"> Observer Bot</h1>
 
 <p align="center">
   Анализ безопасности транзакций в сети Solana через Telegram
