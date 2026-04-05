@@ -120,7 +120,7 @@
 
     Python 3.10+
     aiogram
-    solana-prc
+    solana-rpc
 ---
 
 ---
