@@ -12,7 +12,7 @@
 <h1 align="center"> Observer Bot</h1>
 
 <p align="center">
-  Анализ безопасности транзакций в сети Solana в Telegram
+  Анализ безопасности транзакций в сети Solana
 </p>
 
 <p align="center">
