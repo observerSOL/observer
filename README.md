@@ -6,7 +6,7 @@
   <img src="https://camo.githubusercontent.com/5d2a77363705f731c82a241eed1d9238bea2f5922ebf54e4db25e1a36fc84f5b/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c616e672d72752d7265642e737667">
 </p>
 <p align="center">
-  <img src="[https://i.ibb.co/9H44Ns3L/68747470733a2f2f692e696d6775722e636f6d2f494b797a5136542e706e67.png](https://i.pinimg.com/736x/d7/2c/59/d72c59c8b66c325973d85a6e1527f294.jpg)" width="180">
+  <img src="https://i.pinimg.com/736x/d7/2c/59/d72c59c8b66c325973d85a6e1527f294.jpg" width="180">
 </p>
 
 <h1 align="center">🛡️ Observer Bot</h1>
