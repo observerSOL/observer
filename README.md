@@ -1,3 +1,4 @@
+![Tests](https://github.com/observerSOL/observer/actions/workflows/tests.yml/badge.svg)
 <p align="center">
   <img src="https://i.ibb.co/9H44Ns3L/68747470733a2f2f692e696d6775722e636f6d2f494b797a5136542e706e67.png" width="180">
 </p>
