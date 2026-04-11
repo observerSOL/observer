@@ -1,4 +1,3 @@
-![Tests](https://github.com/observerSOL/observer/actions/workflows/tests.yml/badge.svg)
 <p align="center">
   <img src="https://i.ibb.co/9H44Ns3L/68747470733a2f2f692e696d6775722e636f6d2f494b797a5136542e706e67.png" width="180">
 </p>
@@ -9,6 +8,7 @@
 <p align="center">
   <img src="https://i.pinimg.com/736x/d7/2c/59/d72c59c8b66c325973d85a6e1527f294.jpg" width="180">
 </p>
+![Tests](https://github.com/observerSOL/observer/actions/workflows/tests.yml/badge.svg)
 
 <h1 align="center"> Observer Bot</h1>
 
