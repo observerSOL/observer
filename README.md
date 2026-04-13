@@ -1,6 +1,6 @@
 ![Tests](https://github.com/observerSOL/observer/actions/workflows/tests.yml/badge.svg)
 <p align="center">
-  <img src="https://i.ibb.co/9H44Ns3L/68747470733a2f2f692e696d6775722e636f6d2f494b797a5136542e706e67.png" width="180">
+  <img src="https://camo.githubusercontent.com/924fb837a28296b0d6ec5ef9af211b5f6991b8d080425440a23e4dbcba472493/68747470733a2f2f692e696d6775722e636f6d2f494b797a5136542e706e67" width="180">
 </p>
 <p align="center">
   <img src="https://raw.githubusercontent.com/aimclub/open-source-ops/43bb283758b43d75ec1df0a6bb4ae3eb20066323/badges/ITMO_badge_rus.svg">
