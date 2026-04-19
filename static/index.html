@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OBSERVER</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      min-height: 100vh;
+      cursor: crosshair;
+    }
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px 16px 30px;
+      text-align: center;
+    }
+    .title {
+      font-size: 14px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .pixel-eye-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 0 20px 0;
+    }
+    canvas.pixel-eye {
+      width: 260px;
+      height: 130px;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+      display: block;
+      background: #000;
+    }
+    .card {
+      border: 2px solid #fff;
+      padding: 20px 18px;
+      box-shadow: 6px 6px 0 #fff;
+      background: #000;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #fff;
+      color: #000;
+      border: 2px solid #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 #fff;
+      transition: all 0.1s ease;
+      text-transform: uppercase;
+    }
+    button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #fff;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px 10px;
+      border: 2px dashed #fff;
+      min-height: 70px;
+      font-size: 10px;
+      line-height: 1.6;
+      white-space: pre-line;
+      background: #000;
+    }
+    .low { color: #aaa; }
+    .medium { color: #fff; }
+    .high { color: #fff; text-shadow: 0 0 5px #fff; }
+    .loading { animation: blink 1s infinite; }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+    .footer {
+      margin-top: 25px;
+      font-size: 8px;
+      opacity: 0.6;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="title">OBSERVER TERMINAL</div>
+  <div class="pixel-eye-wrapper">
+    <canvas id="pixelEyeCanvas" class="pixel-eye" width="200" height="100"></canvas>
+  </div>
+  <div class="card">
+    <input id="sig" type="text" placeholder="ENTER SIGNATURE..." autocomplete="off" />
+    <button onclick="handleAnalyze()">ANALYZE</button>
+    <div id="result" class="result">WAITING INPUT...</div>
+  </div>
+  <div class="footer">SOLANA RISK ANALYZER v1.0</div>
+</div>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('pixelEyeCanvas');
+    const ctx = canvas.getContext('2d');
+    const w = 200, h = 100;
+    canvas.width = w; canvas.height = h;
+    ctx.imageSmoothingEnabled = false;
+
+    // Мышь (прямое отслеживание)
+    let targetMouseX = 0, targetMouseY = 0;
+    let currentMouseX = 0, currentMouseY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      const screenCenterX = window.innerWidth / 2;
+      const screenCenterY = window.innerHeight / 2;
+      let dx = (e.clientX - screenCenterX) / (window.innerWidth / 2);
+      let dy = (e.clientY - screenCenterY) / (window.innerHeight / 2);
+      targetMouseX = Math.max(-1, Math.min(1, dx));
+      targetMouseY = Math.max(-1, Math.min(1, dy));
+    });
+
+    function updateMouse() {
+      currentMouseX += (targetMouseX - currentMouseX) * 0.3;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.3;
+      drawEye(currentBlinkAmount);
+      requestAnimationFrame(updateMouse);
+    }
+    requestAnimationFrame(updateMouse);
+
+    // Отрисовка глаза (цвет всегда белый)
+    let currentBlinkAmount = 0;
+    const eyeColor = '#ffffff';
+    const pupilColor = '#ffffff';
+    
+    function drawEye(blinkAmount = 0) {
+      currentBlinkAmount = blinkAmount;
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, w, h);
+
+      function pset(x, y, color) {
+        if (x < 0 || x >= w || y < 0 || y >= h) return;
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, 1, 1);
+      }
+
+      // Внешний контур
+      const outerPoints = [
+        [10, 50], [26, 38], [46, 26], [70, 18], [92, 15], [100, 14],
+        [108, 15], [130, 18], [154, 26], [174, 38], [190, 50],
+        [174, 62], [154, 74], [130, 82], [108, 85], [100, 86],
+        [92, 85], [70, 82], [46, 74], [26, 62]
+      ];
+      ctx.beginPath();
+      ctx.moveTo(outerPoints[0][0], outerPoints[0][1]);
+      for (let i = 1; i < outerPoints.length; i++) ctx.lineTo(outerPoints[i][0], outerPoints[i][1]);
+      ctx.closePath();
+      ctx.fillStyle = eyeColor;
+      ctx.fill();
+
+      // Внутренний чёрный полигон
+      const cx = 100, cy = 50;
+      const a = 62, b = 34, numPoints = 20;
+      const innerPoints = [];
+      for (let i = 0; i < numPoints; i++) {
+        const angle = (i / numPoints) * 2 * Math.PI - Math.PI / 2;
+        innerPoints.push([Math.round(cx + a * Math.cos(angle)), Math.round(cy + b * Math.sin(angle))]);
+      }
+      ctx.beginPath();
+      ctx.moveTo(innerPoints[0][0], innerPoints[0][1]);
+      for (let i = 1; i < innerPoints.length; i++) ctx.lineTo(innerPoints[i][0], innerPoints[i][1]);
+      ctx.closePath();
+      ctx.fillStyle = '#000';
+      ctx.fill();
+
+      // Смещение зрачка
+      const maxOffsetX = 20, maxOffsetY = 14;
+      let offX = currentMouseX * maxOffsetX;
+      let offY = currentMouseY * maxOffsetY;
+      if (blinkAmount > 0.5) { offX *= 0.3; offY *= 0.3; }
+      const baseX = Math.round(cx + offX);
+      const baseY = Math.round(cy + offY);
+
+      // Функция рисования толстых линий
+      function thickLine(x0, y0, x1, y1, thickness, color) {
+        const dx = x1 - x0, dy = y1 - y0;
+        const len = Math.sqrt(dx*dx + dy*dy);
+        const perpX = -dy / len, perpY = dx / len;
+        for (let t = -thickness/2; t <= thickness/2; t++) {
+          const offX = Math.round(perpX * t);
+          const offY = Math.round(perpY * t);
+          let x = x0, y = y0;
+          const sx = x0 < x1 ? 1 : -1;
+          const sy = y0 < y1 ? 1 : -1;
+          let err = Math.abs(x1 - x0) - Math.abs(y1 - y0);
+          while (true) {
+            pset(x + offX, y + offY, color);
+            if (x === x1 && y === y1) break;
+            const e2 = 2 * err;
+            if (e2 > -Math.abs(y1 - y0)) { err -= Math.abs(y1 - y0); x += sx; }
+            if (e2 < Math.abs(x1 - x0)) { err += Math.abs(x1 - x0); y += sy; }
+          }
+        }
+      }
+
+      // Диагонали креста
+      thickLine(baseX - 15, baseY - 10, baseX + 15, baseY + 10, 3, pupilColor);
+      thickLine(baseX - 15, baseY + 10, baseX + 15, baseY - 10, 3, pupilColor);
+
+      // Горизонтальная перемычка
+      for (let dx = -10; dx <= 10; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          pset(baseX + dx, baseY + dy, pupilColor);
+        }
+      }
+      // Вертикальная перемычка
+      for (let dy = -5; dy <= 5; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          pset(baseX + dx, baseY + dy, pupilColor);
+        }
+      }
+
+      // Заливка центральной области 5x5 (чтобы избежать дырок)
+      for (let dy = -2; dy <= 2; dy++) {
+        for (let dx = -2; dx <= 2; dx++) {
+          pset(baseX + dx, baseY + dy, pupilColor);
+        }
+      }
+
+      // Чёрный центр (зрачок)
+      for (let dx = -2; dx <= 2; dx++) {
+        for (let dy = -2; dy <= 2; dy++) {
+          pset(baseX + dx, baseY + dy, '#000');
+        }
+      }
+
+      // Белые блики
+      pset(baseX - 4, baseY - 4, '#fff');
+      pset(baseX - 3, baseY - 4, '#fff');
+      pset(baseX - 4, baseY - 3, '#fff');
+
+      // Моргание
+      if (blinkAmount > 0.001) {
+        const topY = 14, bottomY = 86, midY = 50;
+        const upper = topY + (midY - topY) * blinkAmount * 2;
+        const lower = bottomY - (bottomY - midY) * blinkAmount * 2;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, Math.max(0, upper));
+        ctx.fillRect(0, Math.min(h, lower), w, h - lower);
+      }
+    }
+
+    drawEye(0);
+
+    // Моргание
+    let blinkFrame = null;
+    function startBlink() {
+      if (blinkFrame) cancelAnimationFrame(blinkFrame);
+      const start = performance.now();
+      const DUR = 300;
+      function step(now) {
+        const p = Math.min((now - start) / DUR, 1);
+        let amt;
+        if (p < 0.2) amt = p / 0.2;
+        else if (p < 0.4) amt = 1;
+        else amt = 1 - ((p - 0.4) / 0.6);
+        if (p >= 0.98) amt = 0;
+        drawEye(amt);
+        if (p < 1) blinkFrame = requestAnimationFrame(step);
+        else { drawEye(0); blinkFrame = null; }
+      }
+      blinkFrame = requestAnimationFrame(step);
+    }
+
+    // Анализ
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    async function handleAnalyze() {
+      const sig = document.getElementById("sig").value.trim();
+      const resDiv = document.getElementById("result");
+      startBlink();
+      if (sig.length < 10) {
+        resDiv.innerText = "INVALID SIGNATURE";
+        resDiv.className = "result";
+        return;
+      }
+      resDiv.className = "result loading";
+      resDiv.innerText = "SCANNING...";
+      try {
+        const response = await fetch(`/analyze?signature=${encodeURIComponent(sig)}`);
+        const data = await response.json();
+        if (data.status === "ok") {
+          let cls = "low";
+          if (data.level.includes("HIGH")) cls = "high";
+          else if (data.level.includes("MEDIUM")) cls = "medium";
+          resDiv.className = "result " + cls;
+          resDiv.innerText = `RISK: ${data.level}\nSCORE: ${data.score}`;
+        } else {
+          resDiv.className = "result";
+          resDiv.innerText = "TRANSACTION NOT FOUND";
+        }
+      } catch (e) {
+        resDiv.className = "result";
+        resDiv.innerText = "NETWORK ERROR";
+      }
+    }
+
+    window.handleAnalyze = handleAnalyze;
+  })();
+</script>
+</body>
+</html>
