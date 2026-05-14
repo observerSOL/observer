@@ -18,12 +18,17 @@
       image-rendering: crisp-edges;
       min-height: 100vh;
       cursor: crosshair;
+      display: flex;
+      flex-direction: column;
     }
     .container {
       max-width: 420px;
       margin: 0 auto;
-      padding: 20px 16px 30px;
+      padding: 20px 16px 15px;
       text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
     .title {
       font-size: 14px;
@@ -99,10 +104,36 @@
       100% { opacity: 1; }
     }
     .footer {
-      margin-top: 25px;
       font-size: 8px;
       opacity: 0.6;
       letter-spacing: 0.5px;
+      padding-bottom: 5px;
+    }
+    .footer-links {
+      margin-top: auto;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .footer-links a {
+      display: inline-block;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      opacity: 0.8;
+    }
+    .footer-links a:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    .github-icon {
+      width: 32px;
+      height: 32px;
+      filter: invert(1);
+    }
+    .itmo-badge {
+      height: 32px;
+      width: auto;
     }
   </style>
 </head>
@@ -118,7 +149,15 @@
     <button onclick="handleAnalyze()">ANALYZE</button>
     <div id="result" class="result">WAITING INPUT...</div>
   </div>
-  <div class="footer">SOLANA RISK ANALYZER v1.0</div>
+  <div class="footer" style="margin-top: 20px;">SOLANA RISK ANALYZER v1.0</div>
+  <div class="footer-links">
+    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+      <img class="github-icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/github.svg" alt="GitHub" />
+    </a>
+    <a href="https://itmo.ru" target="_blank" rel="noopener noreferrer">
+      <img class="itmo-badge" src="https://raw.githubusercontent.com/aimclub/open-source-ops/43bb283758b43d75ec1df0a6bb4ae3eb20066323/badges/ITMO_badge_rus.svg" alt="ITMO University" />
+    </a>
+  </div>
 </div>
 
 <script>
