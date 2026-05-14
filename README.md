@@ -25,7 +25,9 @@
 ## Demo
 
 <div align="center">
-https://github.com/user-attachments/assets/2c1ae048-c75b-4b8b-96b7-544bcfc55703
+
+![Demo](https://github.com/user-attachments/assets/2c1ae048-c75b-4b8b-96b7-544bcfc55703)
+
 </div>
 ## Description
 
