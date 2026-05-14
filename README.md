@@ -29,8 +29,9 @@
 ![Demo](https://github.com/user-attachments/assets/2c1ae048-c75b-4b8b-96b7-544bcfc55703)
 
 </div>
-## Description
 
+
+## Description
 **Observer Bot** — инструмент для анализа транзакций в сети Solana.
 
 Бот позволяет быстро проверить транзакцию по Signature и выявить потенциально опасные действия без необходимости вручную анализировать блокчейн-данные.
