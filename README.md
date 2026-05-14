@@ -22,9 +22,13 @@
 </p>
 
 ---
-🎥 Демонстрация
+## Demo
+
+<div align="center">
 
 https://github.com/user-attachments/assets/41982ba5-35ad-4a71-bfc4-4429a3f2b16c
+
+</div>
 ## Description
 
 **Observer Bot** — инструмент для анализа транзакций в сети Solana.
